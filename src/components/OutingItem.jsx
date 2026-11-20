@@ -1,9 +1,11 @@
 import { View, Text } from "react-native";
 
-export default function OutingItem() {
+export default function OutingItem({ outing }) {
+  console.log("outing", outing);
+
   return (
     <View>
-        <Text>Outing Item</Text>
+        <Text>{outing.titre}</Text>
     </View>
   )
 }
