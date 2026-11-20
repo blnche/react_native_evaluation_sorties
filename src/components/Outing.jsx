@@ -57,7 +57,7 @@ export default function Outing() {
   return (
     <View
       style={{
-        flex: 1,
+        // flex: 1,
         alignItems: "center",
         justifyContent: "center",
         padding: 20,
@@ -73,6 +73,7 @@ export default function Outing() {
               justifyContent: "space-between",
               width: "100%",
               padding: 15,
+              border: "1px solid #ccc",
             }}
           >
             <Text style={{ fontSize: 20 }}>{outing.titre}</Text>
