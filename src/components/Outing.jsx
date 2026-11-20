@@ -8,10 +8,14 @@ export default function Outing() {
     const [outing, setOuting] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
-    
-    useEffect(() => {
-        setError(null);
 
+    const handleRetry = () => {
+        setError(null);
+        setLoading(true);
+        handleFetch();
+    }
+
+    const handleFetch = () => {
         chargerSortie(id)
             .then(data => {
                 setOuting(data);
@@ -23,6 +27,13 @@ export default function Outing() {
                 setLoading(false);
                 console.error("Erreur lors du chargement de la sortie :", err);
             })
+    }
+    
+    useEffect(() => {
+        handleFetch();
+        return () => {
+            setError(null);
+        }
     }, []);
 
     if (loading) 
@@ -32,10 +43,13 @@ export default function Outing() {
     
     if (error)
         return (
-            <Text>{error.message}</Text>
+            <View>
+                <Text>{error.message}</Text>
+                <Pressable onPress={handleRetry}>
+                    <Text>Réessayer</Text>
+                </Pressable>
+            </View>
         )
-
-    // Erreur si no outing found
 
     return (
         <View>
@@ -44,7 +58,9 @@ export default function Outing() {
             ) : (
                 <View>
                     <Text>Outing not found</Text>
-                    <Pressable>Réessayer</Pressable>
+                    <Pressable onPress={handleRetry}>
+                        <Text>Réessayer</Text>
+                    </Pressable>
                 </View>
             )}
             
