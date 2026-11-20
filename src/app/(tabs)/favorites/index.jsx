@@ -1,6 +1,7 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import useOutingStore from "../../../store/useOutingStore";
 import OutingList from "../../../components/OutingList";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Favorites() {
   const favoriteIds = useOutingStore((state) => state.favoriteIds);
@@ -10,9 +11,17 @@ export default function Favorites() {
   console.log(favoriteOutings);
 
   return (
-    <View>
-        <Text>Favorites</Text>
+    <SafeAreaView>
+        <Text style={styles.bigTitle}>Favorites</Text>
         <OutingList outings={favoriteOutings} />
-    </View>
+    </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  bigTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+})
