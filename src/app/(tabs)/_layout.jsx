@@ -4,7 +4,7 @@ export default function Layout() {
     return (
         <NativeTabs>
             <NativeTabs.Trigger name="index">
-                <NativeTabs.Trigger.Label>Home</NativeTabs.Trigger.Label>
+                <NativeTabs.Trigger.Label>Sorties</NativeTabs.Trigger.Label>
                 <NativeTabs.Trigger.Icon sf="house.fill" md="home" />
             </NativeTabs.Trigger>
 
@@ -14,7 +14,7 @@ export default function Layout() {
             </NativeTabs.Trigger>
 
             <NativeTabs.Trigger name="bookings">
-                <NativeTabs.Trigger.Label>Bookings</NativeTabs.Trigger.Label>
+                <NativeTabs.Trigger.Label>Réservations</NativeTabs.Trigger.Label>
                 <NativeTabs.Trigger.Icon sf="calendar.circle.fill" md="person" />
             </NativeTabs.Trigger>
         </NativeTabs>
