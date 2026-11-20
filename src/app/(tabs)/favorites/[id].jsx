@@ -1,9 +1,10 @@
-import { View, Text } from "react-native";
+import Outing from "../../../components/Outing";
+import Screen from "../../../components/Screen";
 
 export default function Item() {
   return (
-    <View>
-        <Text>Favorites ID</Text>
-    </View>
-  )
+    <Screen>
+      <Outing />
+    </Screen>
+  );
 }

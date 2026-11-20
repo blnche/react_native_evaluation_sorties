@@ -1,11 +1,17 @@
-import { View, Text, Pressable, StyleSheet } from "react-native";
 import { useEffect, useState } from "react";
-import useOutingStore from "../../store/useOutingStore";
-import { chargerSorties, modeActuel, MODES, choisirMode, rechercherParCategorie } from "../../api/sorties";
-import { CATEGORIES } from "../../data/sorties";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  chargerSorties,
+  choisirMode,
+  modeActuel,
+  MODES,
+  rechercherParCategorie,
+} from "../../api/sorties";
 import OutingList from "../../components/OutingList";
 import Screen from "../../components/Screen";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { CATEGORIES } from "../../data/sorties";
+import useOutingStore from "../../store/useOutingStore";
 
 export default function Homepage() {
   const outings = useOutingStore((state) => state.outings);
@@ -17,7 +23,7 @@ export default function Homepage() {
   const [categoryFilter, setCategoryFilter] = useState("Toutes");
   const [modeAPI, setModeAPI] = useState(modeActuel());
 
-  const modeActuelAPI = modeActuel(); 
+  const modeActuelAPI = modeActuel();
   // console.log("Mode actuel de l'API :", modeActuelAPI, MODES);
 
   // console.log(CATEGORIES);
@@ -34,14 +40,20 @@ export default function Homepage() {
           setFilteredOutings(data);
           setError(null);
           setLoading(false);
-          console.log(`Sorties filtrées par catégorie "${categoryFilter}" :`, data);
+          console.log(
+            `Sorties filtrées par catégorie "${categoryFilter}" :`,
+            data,
+          );
         }
       })
       .catch((err) => {
         if (ignore) return;
         setError(err);
         setLoading(false);
-        console.error(`Erreur lors du filtrage par catégorie "${categoryFilter}" :`, err);
+        console.error(
+          `Erreur lors du filtrage par catégorie "${categoryFilter}" :`,
+          err,
+        );
       });
   }, [categoryFilter]);
 
@@ -58,16 +70,16 @@ export default function Homepage() {
         setError(err);
         setLoading(false);
         console.error("Erreur lors du chargement des sorties :", err);
-      })
+      });
   }, [modeAPI]);
 
-  if (loading) 
+  if (loading)
     return (
       <Screen>
         <Text>Loading...</Text>
-      </Screen>  
+      </Screen>
     );
-  
+
   if (error)
     return (
       <Screen>
@@ -108,58 +120,59 @@ export default function Homepage() {
           ))}
         </View>
       </Screen>
-    )
+    );
 
   return (
     <SafeAreaView>
       <Text style={styles.bigTitle}>Sorties</Text>
       <View
-          style={{
-            marginVertical: 10,
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 5,
-          }}
-        >
-          {MODES.map((mode) => (
-            <Pressable
-              onPress={() => {
-                choisirMode(mode);
-                setModeAPI(mode);
-                console.log("Mode choisi :", mode);
-              }}
-              style={{
-                margin: 5,
-                borderWidth: 1,
-                padding: 5,
-                borderRadius: 5,
-                backgroundColor: mode === modeAPI ? "#007bff" : "#fff",
-                borderColor: mode === modeAPI ? "#007bff" : "#000",
-              }}
+        style={{
+          marginVertical: 10,
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 5,
+        }}
+      >
+        {MODES.map((mode) => (
+          <Pressable
+            onPress={() => {
+              choisirMode(mode);
+              setModeAPI(mode);
+              console.log("Mode choisi :", mode);
+            }}
+            style={{
+              margin: 5,
+              borderWidth: 1,
+              padding: 5,
+              borderRadius: 5,
+              backgroundColor: mode === modeAPI ? "#007bff" : "#fff",
+              borderColor: mode === modeAPI ? "#007bff" : "#000",
+            }}
+            key={mode}
+          >
+            <Text
               key={mode}
+              style={{ color: mode === modeAPI ? "#fff" : "#000" }}
             >
-              <Text
-                key={mode}
-                style={{ color: mode === modeAPI ? "#fff" : "#000" }}
-              >
-                {mode}
-              </Text>
-            </Pressable>
-          ))}
-        </View>
+              {mode}
+            </Text>
+          </Pressable>
+        ))}
+      </View>
       <View style={styles.catContainer}>
         {categories.map((categorie) => (
-          <Pressable key={categorie} onPress={() => setCategoryFilter(categorie)}>
+          <Pressable
+            key={categorie}
+            onPress={() => setCategoryFilter(categorie)}
+          >
             <Text>{categorie}</Text>
           </Pressable>
         ))}
       </View>
-      {filteredOutings && (
-        <OutingList outings={filteredOutings} />
-      )}
+      {filteredOutings && <OutingList outings={filteredOutings} />}
     </SafeAreaView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -170,8 +183,8 @@ const styles = StyleSheet.create({
   },
   catContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     flexWrap: "wrap",
     marginBottom: 10,
   },
-})
+});
